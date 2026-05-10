@@ -35,7 +35,9 @@ body {
 }
 
 button,
-input {
+input,
+select,
+textarea {
   font: inherit;
 }
 
@@ -107,17 +109,32 @@ h2 {
   font-weight: 700;
 }
 
-.field input {
+.field input,
+.field select,
+.field textarea {
   width: 100%;
-  height: 44px;
   border: 1px solid var(--border);
   border-radius: 6px;
-  padding: 0 12px;
   color: var(--text);
   background: #fff;
 }
 
-.field input:focus {
+.field input,
+.field select {
+  height: 44px;
+  padding: 0 12px;
+}
+
+.field textarea {
+  min-height: 84px;
+  resize: vertical;
+  padding: 10px 12px;
+  line-height: 1.5;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
   outline: 2px solid rgba(22, 110, 90, 0.22);
   border-color: var(--accent);
 }
@@ -191,6 +208,22 @@ h2 {
 
 .warnings p {
   margin: 0;
+}
+
+.details-form {
+  display: grid;
+  grid-template-columns: 180px minmax(260px, 1fr);
+  gap: 12px;
+  align-items: start;
+  margin-bottom: 18px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  background: #fbfcfb;
+}
+
+.review-field {
+  min-width: 0;
 }
 
 .candidate-grid {
@@ -276,6 +309,10 @@ h2 {
   }
 
   .url-form {
+    grid-template-columns: 1fr;
+  }
+
+  .details-form {
     grid-template-columns: 1fr;
   }
 

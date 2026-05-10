@@ -18,6 +18,7 @@ const schema: Record<string, NotionPropertySchema> = {
   },
   [RESTAURANT_PROPERTIES.location]: { id: "loc", name: RESTAURANT_PROPERTIES.location, type: "rich_text" },
   [RESTAURANT_PROPERTIES.url]: { id: "url", name: RESTAURANT_PROPERTIES.url, type: "url" },
+  [RESTAURANT_PROPERTIES.review]: { id: "review", name: RESTAURANT_PROPERTIES.review, type: "rich_text" },
   [RESTAURANT_PROPERTIES.enrichmentStatus]: {
     id: "enrich",
     name: RESTAURANT_PROPERTIES.enrichmentStatus,
@@ -48,6 +49,21 @@ describe("notion property builder", () => {
     expect(properties[RESTAURANT_PROPERTIES.status]).toEqual({ status: { name: "未達" } });
     expect(properties[RESTAURANT_PROPERTIES.category]).toEqual({
       multi_select: [{ name: "カレー" }]
+    });
+  });
+
+  it("uses selected status and review on create", () => {
+    const properties = buildCreateProperties(schema, {
+      url: "https://maps.example",
+      candidate,
+      status: "食了",
+      review: "また行きたい",
+      autoWriteThreshold: 0.8
+    });
+
+    expect(properties[RESTAURANT_PROPERTIES.status]).toEqual({ status: { name: "食了" } });
+    expect(properties[RESTAURANT_PROPERTIES.review]).toEqual({
+      rich_text: [{ text: { content: "また行きたい" } }]
     });
   });
 

@@ -47,6 +47,7 @@ export async function createRestaurantPage(
   const properties = buildCreateProperties(dataSource.properties, {
     url: input.inputUrl,
     candidate: input.candidate,
+    status: input.status,
     review: input.review,
     autoWriteThreshold: config.autoWriteThreshold
   });

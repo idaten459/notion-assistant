@@ -82,6 +82,7 @@ export interface EnrichmentResult {
 export interface RestaurantPageInput {
   inputUrl: string;
   candidate: EnrichmentCandidate;
+  status?: string;
   review?: string;
 }
 

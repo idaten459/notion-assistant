@@ -43,6 +43,7 @@ export function buildCreateProperties(
   input: {
     url: string;
     candidate: EnrichmentCandidate;
+    status?: string;
     review?: string;
     autoWriteThreshold: number;
   }
@@ -51,7 +52,7 @@ export function buildCreateProperties(
   const title = input.candidate.name || input.url;
 
   setTextLike(properties, schema, RESTAURANT_PROPERTIES.name, title, "title");
-  setOption(properties, schema, RESTAURANT_PROPERTIES.status, "未達");
+  setOption(properties, schema, RESTAURANT_PROPERTIES.status, input.status || "未達");
   setTextLike(properties, schema, RESTAURANT_PROPERTIES.location, input.candidate.location, "rich_text");
   setUrl(properties, schema, RESTAURANT_PROPERTIES.url, input.url);
   setTextLike(properties, schema, RESTAURANT_PROPERTIES.review, input.review, "rich_text");

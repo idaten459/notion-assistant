@@ -8,6 +8,8 @@ type RequestState = "idle" | "loading" | "creating" | "success" | "error";
 export default function HomePage() {
   const [url, setUrl] = useState("");
   const [password, setPassword] = useState("");
+  const [status, setStatus] = useState("未達");
+  const [review, setReview] = useState("");
   const [state, setState] = useState<RequestState>("idle");
   const [result, setResult] = useState<EnrichmentResult | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -64,7 +66,9 @@ export default function HomePage() {
         headers: requestHeaders(password),
         body: JSON.stringify({
           inputUrl: result.normalizedUrl,
-          candidate: selectedCandidate
+          candidate: selectedCandidate,
+          status,
+          review: review.trim() || undefined
         })
       });
       const body = await response.json();
@@ -132,6 +136,25 @@ export default function HomePage() {
               >
                 {state === "creating" ? "追加中" : "Notionに追加"}
               </button>
+            </div>
+
+            <div className="details-form" aria-label="Notionに追加する内容">
+              <label className="field">
+                <span>ステータス</span>
+                <select value={status} onChange={(event) => setStatus(event.target.value)}>
+                  <option value="未達">未達</option>
+                  <option value="食了">食了</option>
+                </select>
+              </label>
+              <label className="field review-field">
+                <span>感想</span>
+                <textarea
+                  value={review}
+                  onChange={(event) => setReview(event.target.value)}
+                  placeholder="例: 前通って美味しそうだった"
+                  rows={3}
+                />
+              </label>
             </div>
 
             {result.warnings.length > 0 ? (
