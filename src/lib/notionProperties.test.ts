@@ -56,12 +56,12 @@ describe("notion property builder", () => {
     const properties = buildCreateProperties(schema, {
       url: "https://maps.example",
       candidate,
-      status: "食了",
+      status: "リピあり",
       review: "また行きたい",
       autoWriteThreshold: 0.8
     });
 
-    expect(properties[RESTAURANT_PROPERTIES.status]).toEqual({ status: { name: "食了" } });
+    expect(properties[RESTAURANT_PROPERTIES.status]).toEqual({ status: { name: "リピあり" } });
     expect(properties[RESTAURANT_PROPERTIES.review]).toEqual({
       rich_text: [{ text: { content: "また行きたい" } }]
     });

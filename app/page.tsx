@@ -144,6 +144,7 @@ export default function HomePage() {
                 <select value={status} onChange={(event) => setStatus(event.target.value)}>
                   <option value="未達">未達</option>
                   <option value="食了">食了</option>
+                  <option value="リピあり">リピあり</option>
                 </select>
               </label>
               <label className="field review-field">
