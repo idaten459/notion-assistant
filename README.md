@@ -83,6 +83,8 @@ https://あなたのVercelドメイン/api/notion/webhook
 
 Notion のイベントは少し遅延することがあります。Webhook が漏れた場合に備えて、Vercel Cron が `/api/cron/sync` で未補完行を拾います。
 
+Vercel Hobby では Cron は 1 日 1 回までです。このリポジトリでは `vercel.json` を `0 18 * * *` にしており、UTC 18:00、日本時間 03:00 ごろに未補完行を同期します。Webhook が主処理なので通常はこれで十分です。
+
 ## 再補完したい場合
 
 Webhook のループを防ぐため、`補完状態` が `補完済` または `補完候補あり` の行は再処理しません。

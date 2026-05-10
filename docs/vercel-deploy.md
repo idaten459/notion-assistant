@@ -86,6 +86,23 @@ NOTION_WEBHOOK_VERIFICATION_TOKEN=
 
 `CRON_SECRET` は Vercel Cron から `/api/cron/sync` へ送られる `Authorization: Bearer ...` の検証にも使います。ローカルで使った値と同じで構いません。
 
+## Cron の制限
+
+Vercel Hobby では Cron は 1 日 1 回までです。`*/30 * * * *` のような高頻度実行はデプロイ時に拒否されます。
+
+このリポジトリでは Webhook を主処理にし、Cron は取りこぼし救済として 1 日 1 回だけ動かします。
+
+```json
+{
+  "path": "/api/cron/sync",
+  "schedule": "0 18 * * *"
+}
+```
+
+Vercel Cron のタイムゾーンは UTC です。`0 18 * * *` は日本時間では毎日 03:00 ごろです。Hobby では指定時刻ぴったりではなく、その時間帯のどこかで実行されることがあります。
+
+より頻繁に未補完行を拾いたい場合は、Vercel Pro に上げるか、GitHub Actions / 外部 cron / VPS などから `/api/cron/sync?secret=...` を叩く構成にします。
+
 ## 5. Deploy
 
 Vercel の画面から `Deploy` します。成功後、発行された URL で以下を開きます。
